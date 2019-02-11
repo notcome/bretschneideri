@@ -1,0 +1,4 @@
+dist/
+MANIFEST/
+Bretschneideri.egg-info/
+**/__pycache__/
