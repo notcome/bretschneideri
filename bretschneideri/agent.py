@@ -47,7 +47,7 @@ class Agent():
       self.config_dict = json.load(fp)
 
     self.task         = Task(self.config_dict)
-    self.model        = self.task.model(self.config_dict)
+    self.model        = self.task.model(self.config_dict).to(self.device)
     self.optim        = self.task.optim(self.config_dict, self.model)
     self.sample_train = self.task.sample(self.config_dict, True)
     self.sample_test  = self.task.sample(self.config_dict, False)
