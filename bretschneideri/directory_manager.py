@@ -19,6 +19,7 @@ class DirectoryManager:
     elif os.path.isdir(self.root):
       if overwriting:
         rmtree(self.root)
+        os.mkdir(self.root)
       else:
         raise Exception('Directory exists: %s' % self.root)
     else:
