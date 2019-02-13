@@ -3,7 +3,7 @@ import tempfile
 import simplejson as json
 
 from bretschneideri import Task, launch
-from bretschneideri.tests.model import json_config, MatchOLS
+from bretschneideri.tests.model import json_config, TheTask
 
 class TestDummy(TestCase):
   def test_runnable(self):
@@ -11,7 +11,7 @@ class TestDummy(TestCase):
     workdir   = tempfile.mkdtemp()
     with open(json_path, 'w') as fp:
       json.dump(json_config, fp)
-    launch(MatchOLS, {
+    launch(TheTask, {
       'config': json_path,
       'workdir': workdir,
       'n_epoch': 2

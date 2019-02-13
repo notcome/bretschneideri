@@ -2,6 +2,8 @@ from unittest import TestCase
 import tempfile
 import simplejson as json
 
+import torch
+
 from bretschneideri import Task, launch
 from bretschneideri.tests.model import json_config, TheTask
 
@@ -11,16 +13,23 @@ class TestDummy(TestCase):
     workdir   = tempfile.mkdtemp()
     with open(json_path, 'w') as fp:
       json.dump(json_config, fp)
-    launch(TheTask, {
+    agent = launch(TheTask, {
       'config': json_path,
       'workdir': workdir,
       'n_epoch': 2
     })
+
+    x, _ = agent.sample_test(1, agent.device)
+    y    = (agent.model.eval())(x)
+
     # It should silently remove the directory.
-    launch(TheTask, {
+    agent = launch(TheTask, {
       'config': json_path,
       'workdir': workdir,
       'n_epoch': 2,
-      'overwriting': True
+      'action': 'load',
+      'resuming': True
     })
-    self.assertTrue(True)
+    y_   = (agent.model.eval())(x)
+
+    self.assertTrue(torch.all(torch.eq(y, y_)).item())
