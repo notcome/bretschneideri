@@ -31,7 +31,17 @@ class Task(ABC):
 
   # Summary tools
   def summary(self, **kwargs):
-    self.summary_cache.update(kwargs)
+    serialized = {}
+    for k in kwargs:
+      v = kwargs[k]
+      if not torch.is_tensor(v):
+        serialized[k] = v
+      else:
+        if len(v.shape) == 1 and v.shape[0] == 1:
+          serialized[k] = v.item()
+        else:
+          serialized[k] = v.tolist()
+    self.summary_cache.update(serialized)
 
   def summary_field(self, field, **kwargs):
     prefixed = {

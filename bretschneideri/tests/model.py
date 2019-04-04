@@ -35,7 +35,7 @@ class TheTask(Task):
   def train_batch(self, model, x, k):
     k_est = model(x)
     loss  = F.mse_loss(k_est, k)
-    self.summary(loss = loss)
+    self.summary(loss = loss, k_est = k_est, k = k)
     return loss
 
   def test_batch(self, model, x, k):
