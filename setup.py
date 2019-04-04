@@ -3,7 +3,7 @@ from setuptools import setup
 
 setup(
   name     = 'Bretschneideri',
-  version  = '0.1.4',
+  version  = '0.1.5',
   packages = ['bretschneideri'],
   url      = 'https://github.com/notcome/bretschneideri',
 
