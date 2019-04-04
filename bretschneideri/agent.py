@@ -36,6 +36,9 @@ class Agent():
                n_epoch = 200,
                resuming = False,
                overwriting = False):
+    if action == 'load':
+      resuming = True
+
     self.io = DirectoryManager(workdir, resuming, overwriting)
 
     if torch.cuda.is_available():
@@ -54,7 +57,7 @@ class Agent():
 
     self.states_dict  = { 'model': self.model, 'optim': self.optim }
 
-    if action == 'load' or resuming:
+    if resuming:
       self.index = self.io.load_index()
       self.io.load_torch_states(self.index.total_epoch - 1, self.states_dict)
     else:
